@@ -20,6 +20,16 @@ public class HelloController {
     @Autowired
     private QuestionLevelDao questionLevelDao;
 
+    /**医生登录成功后页面*/
+    @RequestMapping("/doctorPage")
+    public String doctorPage(){
+        /*开始执行*/
+        System.out.println("==========>>>>>>>>>.  start doctorPage     ");
+        return "/doctor/doctorLoginSuccess";
+    }
+
+
+
     @ResponseBody
     @RequestMapping("/ajaxTest")
     public String ajaxTest(){
@@ -49,17 +59,6 @@ public class HelloController {
     public String BootstrapTest(){
         /*开始执行*/
        List<QuestionnaireLevel> questionnaireLevelList = questionLevelDao.getQuestionnaireLevelList();
-
-//        Map<String, Object> result = new HashMap<String, Object>();
-//        result.put("code", 0);
-//        result.put("msg", "");
-//        result.put("count",100);
-//        result.put("data",questionnaireLevelList);
-//        JSONArray array = JSONArray.fromObject(allUser);
-//        result.put("data", array);
-//        // 将其转换为JSON数据，并压入值栈返回
-//        ActionContext.getContext().getValueStack().set("jsonData", JSONObject.fromObject(result));
-//        return "success";
         JSONObject obj = new JSONObject();
         //前台通过key值获得对应的value值
         obj.put("code", 0);

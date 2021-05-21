@@ -1,10 +1,200 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>医生登录后的首页</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>心理健康快筛系统</title>
+    <link rel="stylesheet" href="../../static/layui/css/layui.css">
+    <script src="../../static/layui/lay/modules/element.js"></script>
+    <script src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/layui/lay/modules/element.js" type="text/javascript"></script>
+    <script src="/layui/layui.js" type="text/javascript"></script>
+    <script src="/js/jquery-3.5.0.min.js" type="text/javascript"></script>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/jquery.min.js"></script>
 </head>
-<body>
-<h1>医生登录成功后展示的页面</h1>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">心理快筛系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/adminview">患者病例</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">量表测试</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/medicinelist">全部药品</a></dd>
+                    <dd><a href="">急救药</a></dd>
+                    <dd><a href="">常用药</a></dd>
+                    <dd><a href="">管控药</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="/images/login.png" class="layui-nav-img"/>
+                    医生登录成功后展示的页面
+                </a>
+
+            </li>
+            <li class="layui-nav-item"><a href="/loginOut">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+
+                <li class="layui-nav-item">
+                    <a href="javascript:;">日常照料</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">日常就餐</a></dd>
+                        <dd><a href="javascript:;">健康查体</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">急救方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">中风急救</a></dd>
+                        <dd><a href="javascript:;">脑溢血急救</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!--患者信息展示列，登录后默认进入患者信息展示列-->
+    <div class="layui-body" id="container">
+        <table class="layui-hide" id="demo" lay-filter="test"></table>
+
+        <script type="text/html" id="barDemo">
+            <!--            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
+            <a class="layui-btn layui-btn-xs" lay-event="edit">做题</a>
+            <!--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+        </script>
+        <script>
+            layui.config({
+                version: '1586046995289' //为了更新 js 缓存，可忽略
+            });
+
+            layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function () {
+                var laypage = layui.laypage //分页
+                    , layer = layui.layer //弹层
+                    , table = layui.table //表格
+                    , element = layui.element //元素操作
+
+                //向世界问个好
+                layer.msg('Hello Person List');
+
+                //监听Tab切换
+                element.on('tab(demo)', function (data) {
+                    layer.tips('切换了 ' + data.index + '：' + this.innerHTML, this, {
+                        tips: 1
+                    });
+                });
+
+                //执行一个 table 实例
+                table.render({
+                    elem: '#demo'
+                    , height: 450               //table高度的数据值
+                    , url: '/getPatientListForDoctor' //数据接口
+                    , title: '用户表'
+                    , page: true //开启分页
+                    ,toolbar: true  //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                    , totalRow: false //开启合计行
+                    , parseData: function (result) {
+                        return {
+                            "code": result.code
+                            , "msg": result.msg
+                            , "count": result.count
+                            , "data": result.data
+                        }
+                    }
+                    ,cols: [
+                        [
+                            {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                            ,{field:'card', title:'用户账号', width:120}
+                            ,{field:'name', title:'用户名称', width:120}
+                            ,{field:'gender', title:'性别', width:100}
+                            ,{field:'age', title:'年龄', width:80}
+                            ,{field:'office', title:'所属科室', width:100}
+                            ,{field:'illness', title:'病情', width:80}
+                            ,{field:'remark', title:'备注', width:80}
+                        ]
+                    ]
+                });
+
+                //监听行单击事件（双击事件为：rowDouble）
+                table.on('row(test)', function(obj){
+                    var data = obj.data;
+                    function method() {
+                        $.ajax({
+                            type: "GET",
+                            url: "patientChoiceQuestion",
+                            // data:{"id":val},     // data参数是可选的，有多种写法，也可以直接在url参数拼接参数上去，例如这样：url:"getUser?id="+val,
+                            data: "",
+                            async: true,   // 异步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
+                            cache: true,  // 表示浏览器是否缓存被请求页面,默认是 true
+                            dataType: "json",   // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
+                            success: function (data) {
+                                var dataList = data.data;
+                                alert(JSON.stringify(dataList[0]))
+
+                            }
+                        });
+                    }
+                    method();
+                });
+
+
+                //分页
+                laypage.render({
+                    elem: 'pageDemo' //分页容器的id
+                    , count: 100 //总页数
+                    , skin: '#1E9FFF' //自定义选中色值
+                    //,skip: true //开启跳页
+                    , jump: function (obj, first) {
+                        if (!first) {
+                            layer.msg('第' + obj.curr + '页', {offset: 'b'});
+                        }
+                    }
+                });
+                //底部信息
+                var footerTpl = lay('#footer')[0].innerHTML;
+                lay('#footer').html(layui.laytpl(footerTpl).render({}))
+                    .removeClass('layui-hide');
+            });
+        </script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="../src/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
 </body>
 </html>
