@@ -14,6 +14,6 @@ public class Admin {
     private int age;
     private String phone;
     private String password;
-    private int role;
+    private String role;
     private String create_name;
 }

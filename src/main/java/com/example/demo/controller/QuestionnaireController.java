@@ -1,4 +1,4 @@
 package com.example.demo.controller;
 
-public class AdminController {
+public class QuestionnaireController {
 }

@@ -22,9 +22,17 @@ public class HelloController {
 
     @ResponseBody
     @RequestMapping("/ajaxTest")
-    public void ajaxTest(){
+    public String ajaxTest(){
         /*开始执行*/
         System.out.println("==========>>>>>>>>>.  start ajaxTest     ");
+        JSONObject obj = new JSONObject();
+        //前台通过key值获得对应的value值
+        obj.put("code", 0);
+        obj.put("msg", "");
+        obj.put("count", 100);
+        obj.put("data", "www");
+//		  array.add(obj);
+        return obj.toString();
     }
 
 
@@ -33,7 +41,7 @@ public class HelloController {
         /*开始执行*/
         System.out.println("==========>>>>>>>>>.  start HelloTest     ");
 //        helloDap.HelloDaoTest();
-        return "test";
+        return "test/test";
     }
 
     @ResponseBody
@@ -56,7 +64,7 @@ public class HelloController {
         //前台通过key值获得对应的value值
         obj.put("code", 0);
         obj.put("msg", "");
-        obj.put("count", 1000);
+        obj.put("count", 100);
         obj.put("data", questionnaireLevelList);
 //		  array.add(obj);
         return obj.toString();
