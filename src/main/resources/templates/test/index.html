@@ -1,0 +1,32 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <title>测试ajax</title>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+
+        function method() {
+            var val = $("#userId").val();
+            $.ajax({
+                type:"GET",
+                url:"ajaxTest",
+                // data:{"id":val},     // data参数是可选的，有多种写法，也可以直接在url参数拼接参数上去，例如这样：url:"getUser?id="+val,
+                data:"",
+                async:true,   // 异步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
+                cache:true,  // 表示浏览器是否缓存被请求页面,默认是 true
+                dataType:"json",   // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
+                success:function(data) {
+                    alert(JSON.stringify(data))
+                }
+            });
+            // alert("测试异步")
+        }
+    </script>
+    <script src="../static/js/jquery.min.js"></script>
+
+</head>
+<body>
+<a href="" onclick="method()">点击a测试ajax请求</a>
+</body>
+</html>

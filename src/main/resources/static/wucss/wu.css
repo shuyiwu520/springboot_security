@@ -1,0 +1,19 @@
+.wu-header {
+    z-index: 1000;
+    height: 100px
+}
+ .wu-header .wu-nav {
+    background-color: #FBFBFB;
+}
+
+
+.wu-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 15px;
+    background-color: #eee
+}
