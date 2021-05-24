@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>心理健康快筛系统</title>
+    <link rel="stylesheet" href="../../static/layui/css/layui.css">
+    <script src="../../static/layui/lay/modules/element.js"></script>
+    <script src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/layui/lay/modules/element.js" type="text/javascript"></script>
+    <script src="/layui/layui.js" type="text/javascript"></script>
+    <script src="/js/jquery-3.5.0.min.js" type="text/javascript"></script>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">心理快筛系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/adminview">患者病例</a></li>
+            <!--通过，患者的id、门诊卡号，查询患者的测评结果-->
+            <li class="layui-nav-item"><a href="/adminview">患者测评报告</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">量表测试</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/medicinelist">全部药品</a></dd>
+                    <dd><a href="">急救药</a></dd>
+                    <dd><a href="">常用药</a></dd>
+                    <dd><a href="">管控药</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="/images/login.png" class="layui-nav-img"/>
+                    医生登录成功后展示的页面
+                </a>
+
+            </li>
+            <li class="layui-nav-item"><a href="/loginOut">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+           <h1>患者详细信息</h1>
+        </div>
+    </div>
+
+    <!--患者信息展示列，登录后默认进入患者信息展示列-->
+    <div class="layui-body" id="container">
+
+        <h1>患者信息展示</h1>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="../src/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

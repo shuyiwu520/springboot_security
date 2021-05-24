@@ -129,11 +129,12 @@
                     ,cols: [
                         [
                             {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-                            ,{field:'card', title:'用户账号', width:120}
-                            ,{field:'name', title:'用户名称', width:120}
-                            ,{field:'gender', title:'性别', width:100}
-                            ,{field:'age', title:'年龄', width:80}
+                            ,{field:'no', title:'门诊编号', width:120}
+                            ,{field:'name', title:'患者名', width:100}
+                            ,{field:'gender', title:'性别', width:60}
+                            ,{field:'age', title:'年龄', width:60}
                             ,{field:'office', title:'所属科室', width:100}
+                            ,{field:'patient_type', title:'患者类型', width:120}
                             ,{field:'illness', title:'病情', width:80}
                             ,{field:'remark', title:'备注', width:80}
                         ]
@@ -143,18 +144,20 @@
                 //监听行单击事件（双击事件为：rowDouble）
                 table.on('row(test)', function(obj){
                     var data = obj.data;
+                    layer.alert(JSON.stringify(data), {
+                        title: '当前行数据：'
+                    });
                     function method() {
                         $.ajax({
-                            type: "GET",
+                            type: "post",
                             url: "patientChoiceQuestion",
                             // data:{"id":val},     // data参数是可选的，有多种写法，也可以直接在url参数拼接参数上去，例如这样：url:"getUser?id="+val,
-                            data: "",
-                            async: true,   // 异步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
+                            data:data,
+                            async: false,   // 异步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
                             cache: true,  // 表示浏览器是否缓存被请求页面,默认是 true
                             dataType: "json",   // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
                             success: function (data) {
-                                var dataList = data.data;
-                                alert(JSON.stringify(dataList[0]))
+                                location.href="/getPatientDetailedInfo";
 
                             }
                         });

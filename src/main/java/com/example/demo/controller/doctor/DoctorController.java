@@ -1,13 +1,11 @@
 package com.example.demo.controller.doctor;
 
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.dao.doctor.DoctorDao;
-import com.example.demo.entity.Patient;
+import com.example.demo.entity.pateint.Patient;
+import com.example.demo.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,16 +15,16 @@ import java.util.List;
 public class DoctorController {
 
     @Autowired
-    private DoctorDao doctorDao;
+    private DoctorService doctorService;
 
+    /**
+     * 1.医生登录后，跳转到登录后的页面
+     * 2.登录成功，前台传递医生账号；根据账号，查询今天的患者列表*/
     @RequestMapping("/getPatientListForDoctor")
     @ResponseBody
     public String getPatientListForDoctor(){
-        List<Patient> patientList = doctorDao.getPatientInfoList("4005");
-        System.out.println("===========>>>>>>>> controller >>>>>>> getPatientListForDoctor()  ");
-        System.out.println(patientList.get(0).toString());
+        List<Patient> patientList = doctorService.getPatientListForDoctor("371102001001");
         JSONObject obj = new JSONObject();
-        //前台通过key值获得对应的value值
         obj.put("code", 0);
         obj.put("msg", "");
         obj.put("count", patientList.size());

@@ -21,11 +21,11 @@ public class HelloController {
     private QuestionLevelDao questionLevelDao;
 
     /**医生登录成功后页面*/
-    @RequestMapping("/doctorPage")
-    public String doctorPage(){
+    @RequestMapping("/getPatientDetailedInfo")
+    public String getPatientDetailedInfo(){
         /*开始执行*/
-        System.out.println("==========>>>>>>>>>.  start doctorPage     ");
-        return "/doctor/doctorLoginSuccess";
+        System.out.println("==========>>>>>>>>>.  start getPatientDetailedInfo()     ");
+        return "doctor/patientDetailedInformation";
     }
 
 
@@ -51,7 +51,7 @@ public class HelloController {
         /*开始执行*/
         System.out.println("==========>>>>>>>>>.  start HelloTest     ");
 //        helloDap.HelloDaoTest();
-        return "test/test";
+        return "test/echartsData";
     }
 
     @ResponseBody

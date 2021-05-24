@@ -5,14 +5,15 @@ import com.example.demo.dao.QuestionLevelDao;
 import com.example.demo.dao.patient.PatientDao;
 import com.example.demo.dao.questionnaire.QuestionnaireDao;
 import com.example.demo.entity.QuestionnaireLevel;
+import com.example.demo.entity.pateint.Patient;
 import com.example.demo.entity.pateint.PatientQuestionnaire;
 import com.example.demo.entity.questionnaire.SingleChoiceQuestionnaire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PatientController {
@@ -25,18 +26,19 @@ public class PatientController {
     /**
      * 通过患者账号，量表编号，进行量表问答、记录*/
     @ResponseBody
-    @RequestMapping("/patientChoiceQuestion")
-    public String patientChoiceQuestion() {
+    @PostMapping(value = "/patientChoiceQuestion")
+    /**前端通过Ajax直接解析请求，用实体类获得前端参数*/
+    public String patientChoiceQuestion(Patient patient) {
 
-        List<SingleChoiceQuestionnaire> singleChoiceQuestionnaireList = questionnaireDao.getｃChoiceQuestionnaireList("1001");
-        System.out.println("====>>>>  start patientChoiceQuestion");
+        List<SingleChoiceQuestionnaire> singleChoiceQuestionnaireList = questionnaireDao.getChoiceQuestionnaireList("1001");
+//        /**layui返回的数据格式*/
         JSONObject obj = new JSONObject();
-        //前台通过key值获得对应的value值
         obj.put("code", 0);
         obj.put("msg", "");
         obj.put("count", singleChoiceQuestionnaireList.size());
         obj.put("data", singleChoiceQuestionnaireList);
         return obj.toString();
+//        return "success";
     }
 
 
