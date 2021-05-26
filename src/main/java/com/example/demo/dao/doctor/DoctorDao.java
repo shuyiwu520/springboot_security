@@ -20,6 +20,15 @@ public class DoctorDao {
         return patientList;
     }
 
+    /**
+     * 通过患者门诊编号，获取患者的病例、测试结果等详细信息*/
+    public Patient getPatientDetailedInfo(int outpatientNo){
+        String sql = "SELECT * FROM  outpatient WHERE no = '"+ outpatientNo +"'";
+        List<Patient> patientList = jdbc.query(sql,new BeanPropertyRowMapper<>(Patient.class));
+        Patient patient = patientList.get(0);
+        return patient;
+    }
+
 
 
 }

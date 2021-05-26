@@ -20,9 +20,8 @@ public class LoginController {
                                   @RequestParam("password") String password){
         Login login = loginDao.loginData(idCard);
         String role = login.getLogin_role();
-        System.out.println("=====>>>> loginController()");
-        System.out.println(login.toString());
-        /**通过后台查询用户的角色进行过滤选择*/
+        /**
+         * 通过后台查询用户的角色进行过滤选择*/
         if (Constants.DOCTOR.equals(role)){
             return "doctor/doctorLoginSuccess";
         }else if (Constants.PATIENT.equals(role)){

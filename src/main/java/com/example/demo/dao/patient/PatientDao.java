@@ -17,7 +17,7 @@ public class PatientDao {
     /**
      * 获取患者需要的所有量表*/
     public List<PatientQuestionnaire> getPatientQuestionnaireList(String idCard){
-        String sql = "SELECT * from patient_qustionenaire WHERE card = '" + idCard +"' ";
+        String sql = "SELECT * from patient_questionenaire WHERE card = '" + idCard +"' ";
         List<PatientQuestionnaire> patientQuestionnaireList = jdbc.query(sql,new BeanPropertyRowMapper<>(PatientQuestionnaire.class));
         System.out.println("=============>>>>>>>>>>  getPatientQuestionnaireList");
         return patientQuestionnaireList;

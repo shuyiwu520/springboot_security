@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 29/04/2021 23:14:50
+ Date: 26/05/2021 22:38:21
 */
 
 SET NAMES utf8mb4;
@@ -20,30 +20,113 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for admin
 -- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin`  (
+                          `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
+                          `card` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '身份证号',
+                          `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
+                          `gender` int(2) DEFAULT NULL COMMENT '性别',
+                          `age` int(11) DEFAULT NULL COMMENT '年龄',
+                          `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '联系电话',
+                          `password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '123456' COMMENT '登录密码',
+                          `role` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色类型',
+                          `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
+                          `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                          `update_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+                          `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新时间',
+                          PRIMARY KEY (`id`, `card`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试者账号信息' ROW_FORMAT = Dynamic;
 
-DROP table if exists admin;
-CREATE TABLE `admin` (
-                         `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
-                         `card` varchar(18) NOT NULL COMMENT '身份证号',
-                         `name` varchar(30) DEFAULT NULL COMMENT '姓名',
-                         `gender` int(2) DEFAULT NULL COMMENT '性别',
-                         `age` int(11) DEFAULT NULL COMMENT '年龄',
-                         `phone` varchar(11) DEFAULT NULL COMMENT '联系电话',
-                         `password` varchar(40) DEFAULT '123456' COMMENT '登录密码',
-                         `role` varchar(2) DEFAULT NULL COMMENT '角色类型',
-                         `create_name` varchar(30) NOT NULL COMMENT '创建人',
-                         `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                         `update_name` varchar(30) DEFAULT NULL COMMENT '更新人',
-                         `update_time` varchar(255) DEFAULT NULL COMMENT '更新时间',
-                         PRIMARY KEY (`id`,`card`) USING BTREE
--- 设置自增长的起始数字 AUTO_INCREMENT=3
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='测试者账号信息';
+-- ----------------------------
+-- Table structure for doctor
+-- ----------------------------
+DROP TABLE IF EXISTS `doctor`;
+CREATE TABLE `doctor`  (
+                           `doctor_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
+                           `doctor_card` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '身份证号',
+                           `doctor_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
+                           `doctor_genrel` int(2) DEFAULT NULL COMMENT '性别',
+                           `doctor_age` int(11) DEFAULT NULL COMMENT '年龄',
+                           `doctor_phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '联系电话',
+                           `doctor_password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '123456' COMMENT '登录密码',
+                           `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
+                           `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `update_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+                           `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新时间',
+                           PRIMARY KEY (`doctor_id`, `doctor_card`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '医生账号' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Records of doctor
+-- ----------------------------
+INSERT INTO `doctor` VALUES (1, '371102001001', '陈晨', 1, 26, '13256789453', '123456', '吴蜀', '2021-04-30 16:42:58', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for level_questionnaire
+-- ----------------------------
+DROP TABLE IF EXISTS `level_questionnaire`;
+CREATE TABLE `level_questionnaire`  (
+                                        `level_id` int(4) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
+                                        `questionnaire_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '等级名称',
+                                        `class_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表名类别，名称',
+                                        `class1` int(4) DEFAULT NULL COMMENT '一级',
+                                        `class2` int(4) DEFAULT NULL COMMENT '二级',
+                                        `questionnaire_type` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '调查量表中包含的调查类型：1.单选顺序调查，2.多选顺序调查；3.跳转量表，问题跳转；4.问答型；5.模块跳转',
+                                        `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                        PRIMARY KEY (`level_id`, `questionnaire_key`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '量表层级解析，以及量表名称' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for login
+-- ----------------------------
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE `login`  (
+                          `card` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '身份证号',
+                          `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
+                          `login_role` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色类型：０．管理员，１．医生，２．患者',
+                          `password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '123456' COMMENT '密码',
+                          `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
+                          `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                          `update_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+                          `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新时间',
+                          PRIMARY KEY (`card`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户登录信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of login
+-- ----------------------------
+INSERT INTO `login` VALUES ('27060001', '张琳', '1', '123456', '', '2021-05-23 00:41:02', '', '');
+INSERT INTO `login` VALUES ('3711020001', '吴哲', '2', '123456', '', '2021-05-23 00:39:26', '', '');
+
+-- ----------------------------
+-- Table structure for outpatient
+-- ----------------------------
+DROP TABLE IF EXISTS `outpatient`;
+CREATE TABLE `outpatient`  (
+                               `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
+                               `no` int(20) NOT NULL COMMENT '门诊编号',
+                               `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '患者姓名',
+                               `medical_card` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '就诊卡号',
+                               `gender` int(2) NOT NULL DEFAULT 2 COMMENT '患者性别：1.男，2.女',
+                               `age` int(11) NOT NULL COMMENT '患者年龄',
+                               `doctor_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '挂号医生号',
+                               `office` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '挂号科室编号',
+                               `patient_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '患者类型',
+                               `create_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'wuu' COMMENT '创建人，挂号员',
+                               `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                               PRIMARY KEY (`id`, `no`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '门诊挂号数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of outpatient
+-- ----------------------------
+INSERT INTO `outpatient` VALUES (1, 2716001, '吴哲', '3711020001', 2, 34, '371102001001', '4005', '抑郁症', 'wuu', '2021-05-24 10:03:53');
+INSERT INTO `outpatient` VALUES (2, 2716002, '马鑫', '3711020002', 2, 34, '371102001001', '4005', '抑郁症', 'wuu', '2021-05-24 10:03:53');
+INSERT INTO `outpatient` VALUES (3, 2716003, '刘田', '3711020003', 2, 34, '371102001003', '4005', '抑郁症', 'wuu', '2021-05-24 10:03:53');
 
 -- ----------------------------
 -- Table structure for patient
--- ---------------------------
-
+-- ----------------------------
 DROP TABLE IF EXISTS `patient`;
 CREATE TABLE `patient`  (
                             `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
@@ -63,48 +146,39 @@ CREATE TABLE `patient`  (
                             `update_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
                             `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新时间',
                             PRIMARY KEY (`id`, `card`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试者账号信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试者账号信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of patient
 -- ----------------------------
-INSERT INTO wuu_taiyi.patient(card, name, genrel, age, `role`, phone, address, email, remark, office, password, create_name, create_time, update_name, update_time)
-VALUES('3711020001', '吴哲', 1, 34, '2', '13247648907', '山东省泰安市泰山区', '132134@qq.com', '备注', '4005', '123456', '吴蜀', CURRENT_TIMESTAMP, '', '');
-
-INSERT INTO wuu_taiyi.patient(card, name, genrel, age, `role`, phone, address, email, remark, office, password, create_name, create_time, update_name, update_time)
-VALUES('3711020002', '马欣', 1, 34, '2', '13247648907', '山东省泰安市泰山区', '132134@qq.com', '备注', '4005', '123456', '吴蜀', CURRENT_TIMESTAMP, '', '');
+INSERT INTO `patient` VALUES (2, '3711020001', '吴哲', 1, 34, '2', '13247648907', '山东省泰安市泰山区', '132134@qq.com', '备注', '4005', '123456', '吴蜀', '2021-05-22 23:47:21', '', '');
+INSERT INTO `patient` VALUES (3, '3711020002', '马欣', 1, 34, '2', '13247648907', '山东省泰安市泰山区', '132134@qq.com', '备注', '4005', '123456', '吴蜀', '2021-05-22 23:47:21', '', '');
 
 -- ----------------------------
--- Table structure for patient_qustionenaire
+-- Table structure for patient_questionenaire
 -- ----------------------------
-DROP TABLE IF EXISTS `patient_qustionenaire`;
-CREATE TABLE `patient_qustionenaire`  (
-                                          `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
-                                          `card` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '身份证号',
-                                          `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
-                                          `questionnaire_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表编号',
-                                          `questionnaire_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表名称',
-                                          `office` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '组织，病人所属科室',
-                                          `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
-                                          `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
-                                          `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                          `update_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
-                                          `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新时间',
-                                          PRIMARY KEY (`id`, `card`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试者要做的调查量表' ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS `patient_questionenaire`;
+CREATE TABLE `patient_questionenaire`  (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
+                                           `card` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '身份证号',
+                                           `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
+                                           `questionnaire_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表名称',
+                                           `questionnaire_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表名称',
+                                           `office` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '组织，病人所属科室',
+                                           `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+                                           `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
+                                           `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                           `update_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+                                           `update_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新时间',
+                                           PRIMARY KEY (`id`, `card`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试者要做的调查量表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of questionnaire
+-- Records of patient_questionenaire
 -- ----------------------------
-
-INSERT INTO wuu_taiyi.patient_qustionenaire(card, name, questionnaire_key, questionnaire_name, office, remark, create_name, create_time, update_name, update_time)
-VALUES('3711020001', '吴哲', '1001', '艾森克人格个性问卷调查EPQA(成年人)', '4005', '备注', 'wuu', CURRENT_TIMESTAMP, '', '');
-INSERT INTO wuu_taiyi.patient_qustionenaire(card, name, questionnaire_key, questionnaire_name, office, remark, create_name, create_time, update_name, update_time)
-VALUES('3711020001', '吴哲', '1002', '艾森克人格个性问卷调查EPQC(儿童)', '4005', '备注', 'wuu', CURRENT_TIMESTAMP, '', '');
-INSERT INTO wuu_taiyi.patient_qustionenaire(card, name, questionnaire_key, questionnaire_name, office, remark, create_name, create_time, update_name, update_time)
-VALUES('3711020002', '马欣', '1001', '艾森克人格个性问卷调查EPQA(成年人)', '4005', '备注', 'wuu', CURRENT_TIMESTAMP, '', '');
-
-
+INSERT INTO `patient_questionenaire` VALUES (1, '3711020001', '吴哲', '1001', '艾森克人格个性问卷调查EPQA(成年人)', '4005', '备注', 'wuu', '2021-05-25 08:21:06', '', '');
+INSERT INTO `patient_questionenaire` VALUES (2, '3711020001', '吴哲', '1002', '艾森克人格个性问卷调查EPQC(儿童)', '4005', '备注', 'wuu', '2021-05-25 08:21:07', '', '');
+INSERT INTO `patient_questionenaire` VALUES (3, '3711020002', '马欣', '1001', '艾森克人格个性问卷调查EPQA(成年人)', '4005', '备注', 'wuu', '2021-05-25 08:21:07', '', '');
 
 -- ----------------------------
 -- Table structure for questionnaire
@@ -120,22 +194,16 @@ CREATE TABLE `questionnaire`  (
                                   `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '选项列表对应的分数',
                                   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                   PRIMARY KEY (`id`, `level_key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '量表题目存储' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '量表题目存储' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of questionnaire
 -- ----------------------------
-INSERT INTO wuu_taiyi.questionnaire(level_key, question_key, question, questionnaire_options, score, create_name, create_time)
-VALUES('1001', '1', '你是否有许多不同的业余爱好？', '是|否', '１|2', 'wuu', CURRENT_TIMESTAMP);
-INSERT INTO wuu_taiyi.questionnaire(level_key, question_key, question, questionnaire_options, score, create_name, create_time)
-VALUES('1001', '２', '你是否在做任何事情以前都要停下来仔细思考？', '是|否', '１|2', 'wuu', CURRENT_TIMESTAMP);
-INSERT INTO wuu_taiyi.questionnaire(level_key, question_key, question, questionnaire_options, score, create_name, create_time)
-VALUES('1001', '３', '你的心境是否常有起伏？', '是|否', '１|2', 'wuu', CURRENT_TIMESTAMP);
-INSERT INTO wuu_taiyi.questionnaire(level_key, question_key, question, questionnaire_options, score, create_name, create_time)
-VALUES('1001', '４', '你曾有过明知是别人的功劳而你去接受奖励的事吗？', '是|否', '１|2', 'wuu', CURRENT_TIMESTAMP);
-INSERT INTO wuu_taiyi.questionnaire(level_key, question_key, question, questionnaire_options, score, create_name, create_time)
-VALUES('100２', '１', '你曾有过明知是别人的功劳而你去接受奖励的事吗？', '是|否', '１|2', 'wuu', CURRENT_TIMESTAMP);
-
+INSERT INTO `questionnaire` VALUES (1, '1001', '1', '你是否有许多不同的业余爱好？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
+INSERT INTO `questionnaire` VALUES (2, '1001', '２', '你是否在做任何事情以前都要停下来仔细思考？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
+INSERT INTO `questionnaire` VALUES (3, '1001', '３', '你的心境是否常有起伏？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
+INSERT INTO `questionnaire` VALUES (4, '1001', '４', '你曾有过明知是别人的功劳而你去接受奖励的事吗？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
+INSERT INTO `questionnaire` VALUES (5, '100２', '１', '你曾有过明知是别人的功劳而你去接受奖励的事吗？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
 
 -- ----------------------------
 -- Table structure for questionnaire_level
@@ -360,5 +428,18 @@ CREATE TABLE `questionnaire_recoeds`  (
 -- Records of questionnaire_recoeds
 -- ----------------------------
 INSERT INTO `questionnaire_recoeds` VALUES (1, '371102199830985711', 1, '1001', '1', '是', '2', '0000-00-00 00:00:00');
+
+-- ----------------------------
+-- Table structure for roles
+-- ----------------------------
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE `roles`  (
+                          `roles_card` int(4) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
+                          `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称（1.系统管理员，2.医生；3.患者；4.主任医师）',
+                          `power` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色类别',
+                          `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
+                          `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                          PRIMARY KEY (`roles_card`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

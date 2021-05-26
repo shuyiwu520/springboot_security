@@ -18,4 +18,13 @@ public class DoctorServiceImp implements DoctorService {
         List<Patient> patientList = doctorDao.getPatientInfoList(doctorId);
         return patientList;
     }
+
+    /**
+     * 通过患者门诊编号，获取患者的病例、测试结果等详细信息*/
+    @Override
+    public Patient getPatientDetailedInfo(int outpatientNo) {
+        Patient patient = doctorDao.getPatientDetailedInfo(outpatientNo);
+
+        return patient;
+    }
 }

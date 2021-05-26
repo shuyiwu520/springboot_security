@@ -15,20 +15,6 @@ import java.util.List;
 @Controller
 public class HelloController {
 
-    @Autowired
-    private HelloDap helloDap;
-    @Autowired
-    private QuestionLevelDao questionLevelDao;
-
-    /**医生登录成功后页面*/
-    @RequestMapping("/getPatientDetailedInfo")
-    public String getPatientDetailedInfo(){
-        /*开始执行*/
-        System.out.println("==========>>>>>>>>>.  start getPatientDetailedInfo()     ");
-        return "doctor/patientDetailedInformation";
-    }
-
-
 
     @ResponseBody
     @RequestMapping("/ajaxTest")
@@ -45,27 +31,11 @@ public class HelloController {
         return obj.toString();
     }
 
-
     @RequestMapping("/hello")
     public String HelloTest(){
         /*开始执行*/
         System.out.println("==========>>>>>>>>>.  start HelloTest     ");
-//        helloDap.HelloDaoTest();
-        return "test/echartsData";
+        return "success";
     }
 
-    @ResponseBody
-    @RequestMapping("/table")
-    public String BootstrapTest(){
-        /*开始执行*/
-       List<QuestionnaireLevel> questionnaireLevelList = questionLevelDao.getQuestionnaireLevelList();
-        JSONObject obj = new JSONObject();
-        //前台通过key值获得对应的value值
-        obj.put("code", 0);
-        obj.put("msg", "");
-        obj.put("count", 100);
-        obj.put("data", questionnaireLevelList);
-//		  array.add(obj);
-        return obj.toString();
-    }
 }

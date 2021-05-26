@@ -22,12 +22,13 @@
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="/adminview">患者病例</a></li>
-            <li class="layui-nav-item"><a href="javascript:;">量表测试</a>
+            <!--查看所测评量表-->
+            <li class="layui-nav-item"><a href="javascript:;">打印测评量表</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/medicinelist">全部药品</a></dd>
-                    <dd><a href="">急救药</a></dd>
-                    <dd><a href="">常用药</a></dd>
-                    <dd><a href="">管控药</a></dd>
+                    <dd><a href="/getPersonality">个人与人格测评</a></dd>
+                    <dd><a href="/getMentality">精神科心理测评</a></dd>
+                    <dd><a href="/getHygieneMentality">心理卫生量表</a></dd>
+                    <dd><a href="/getChildrenTemperament">中国儿童气质量表</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
@@ -100,7 +101,7 @@
                     , element = layui.element //元素操作
 
                 //向世界问个好
-                layer.msg('Hello Person List');
+                layer.msg('Hello doctor');
 
                 //监听Tab切换
                 element.on('tab(demo)', function (data) {
@@ -144,20 +145,17 @@
                 //监听行单击事件（双击事件为：rowDouble）
                 table.on('row(test)', function(obj){
                     var data = obj.data;
-                    layer.alert(JSON.stringify(data), {
-                        title: '当前行数据：'
-                    });
                     function method() {
                         $.ajax({
                             type: "post",
-                            url: "patientChoiceQuestion",
-                            // data:{"id":val},     // data参数是可选的，有多种写法，也可以直接在url参数拼接参数上去，例如这样：url:"getUser?id="+val,
-                            data:data,
+                            url: "getPatientDetailedInfo",
+                            /*通过Ajax向后台传递数据，后天使用实体类获取，自动获取全部数据*/
+                             data:data,
                             async: false,   // 异步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
                             cache: true,  // 表示浏览器是否缓存被请求页面,默认是 true
                             dataType: "json",   // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
                             success: function (data) {
-                                location.href="/getPatientDetailedInfo";
+                                location.href="/showPatientDetailedInfo";
 
                             }
                         });
