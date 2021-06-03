@@ -57,7 +57,14 @@
     <!--患者信息展示列，登录后默认进入患者信息展示列-->
     <div class="layui-body" id="container" style="left:500px;">
         <!--数据表单，显示数据列表-->
-        <table class="layui-hide" id="demo" lay-filter="test"></table>
+        <table class="layui-hide" id="demo" lay-filter="test">
+        </table>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+
+
     </div>
 
     <div class="layui-footer"  style="left:500px;">
@@ -113,10 +120,32 @@
                     ,{field:'questionnaire_name', title:'量表名称'}
                     ,{field:'remark', title:'备注', width:80}
                     ,{field:'create_name', title:'创建人', width:120}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                 ]
             ]
         });
 
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
         //监听行单击事件（双击事件为：rowDouble）
         table.on('row(test)', function(obj){
             var data = obj.data;

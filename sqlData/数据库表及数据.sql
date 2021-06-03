@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 26/05/2021 22:38:21
+ Date: 03/06/2021 10:57:44
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `admin`  (
                           `update_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
                           `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新时间',
                           PRIMARY KEY (`id`, `card`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试者账号信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试者账号信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for doctor
@@ -185,25 +185,29 @@ INSERT INTO `patient_questionenaire` VALUES (3, '3711020002', '马欣', '1001', 
 -- ----------------------------
 DROP TABLE IF EXISTS `questionnaire`;
 CREATE TABLE `questionnaire`  (
-                                  `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
-                                  `level_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表编号',
-                                  `question_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '问题在量表中的编号',
-                                  `question` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '问题在量表中的编号',
+                                  `question_id` int(4) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
+                                  `questionnaire_level_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表编号',
+                                  `questionnaire_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '问题在量表中的编号',
+                                  `question` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调查量表中的问题',
                                   `questionnaire_options` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '问题选项列表',
-                                  `score` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '选项列表对应的分数',
+                                  `questionnaire_score` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '选项列表对应的分数',
+                                  `questionnaire_type` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '问题的类型：1.单选；2.多选；3.跳转量表；4.简答；5.模块跳转量表',
                                   `create_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '选项列表对应的分数',
                                   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                  PRIMARY KEY (`id`, `level_key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '量表题目存储' ROW_FORMAT = Dynamic;
+                                  `status` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态（0中止 1正常 2关闭 3审核中）',
+                                  PRIMARY KEY (`question_id`, `questionnaire_level_key`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '量表题目存储' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of questionnaire
 -- ----------------------------
-INSERT INTO `questionnaire` VALUES (1, '1001', '1', '你是否有许多不同的业余爱好？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
-INSERT INTO `questionnaire` VALUES (2, '1001', '２', '你是否在做任何事情以前都要停下来仔细思考？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
-INSERT INTO `questionnaire` VALUES (3, '1001', '３', '你的心境是否常有起伏？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
-INSERT INTO `questionnaire` VALUES (4, '1001', '４', '你曾有过明知是别人的功劳而你去接受奖励的事吗？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
-INSERT INTO `questionnaire` VALUES (5, '100２', '１', '你曾有过明知是别人的功劳而你去接受奖励的事吗？', '是|否', '１|2', 'wuu', '2021-05-22 23:47:22');
+INSERT INTO `questionnaire` VALUES (1, '1001', '1', '你是否有许多不同的业余爱好？', '是|否', '１|2', '1', 'wuu', '2021-05-31 10:08:40', '1');
+INSERT INTO `questionnaire` VALUES (2, '1001', '2', '你是否在做任何事情以前都要停下来仔细思考？', '是|否', '１|2', '1', 'wuu', '2021-05-31 10:08:40', '1');
+INSERT INTO `questionnaire` VALUES (3, '1001', '3', '你的心境是否常有起伏？', '是|否', '１|2', '1', 'wuu', '2021-05-31 10:08:40', '1');
+INSERT INTO `questionnaire` VALUES (4, '1001', '4', '你曾有过明知是别人的功劳而你去接受奖励的事吗？', '是|否', '１|2', '1', 'wuu', '2021-05-31 10:08:40', '1');
+INSERT INTO `questionnaire` VALUES (5, '1002', '1', '你是否有许多不同的业余爱好？', '是,2;否,3', '１|2', '4', 'wuu', '2021-05-31 10:08:40', '1');
+INSERT INTO `questionnaire` VALUES (6, '1002', '2', '你是否在做任何事情以前都要停下来仔细思考？', '是,4;否,5', '１|2', '4', 'wuu', '2021-05-31 10:08:40', '1');
+INSERT INTO `questionnaire` VALUES (7, '1002', '3', '你是否在做任何事情以前都要停下来仔细思考？', '是,4;否,5', '１|2', '4', 'wuu', '2021-05-31 10:08:40', '1');
 
 -- ----------------------------
 -- Table structure for questionnaire_level
